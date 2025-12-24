@@ -65,7 +65,6 @@ def send_weather_email():
     subject = f"Weather | {temp_state.upper()} | {condition.upper()}"
 
     body = (
-        f"Time: {datetime.now()}\n"
         f"Temperature: {temp}°C ({temp_state})\n"
         f"Condition: {condition}\n"
         f"Wind: {wind} km/h ({wind_state})"
@@ -86,3 +85,4 @@ def send_weather_email():
     server.quit()
 
 send_weather_email()
+

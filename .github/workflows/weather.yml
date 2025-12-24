@@ -24,4 +24,4 @@ jobs:
       - name: Run weather bot
         env:
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        run: python weather_bot.py
+        run: python EmailSender.py

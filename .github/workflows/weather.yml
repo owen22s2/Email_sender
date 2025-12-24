@@ -1,4 +1,4 @@
-name: Weather Mail Bot
+name: EmailSender
 
 on:
   schedule:

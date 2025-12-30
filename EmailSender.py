@@ -55,13 +55,6 @@ def get_weather():
 def feels_like(temp, wind):
     return round(temp - (wind * 0.1), 1)
 
-
-def get_temp_trend(current):
-    if not os.path.exists(STATE_FILE):
-        with open(STATE_FILE, "w") as f:
-            f.write(str(current))
-        return "no data"
-
     with open(STATE_FILE, "r") as f:
         last = float(f.read())
 
@@ -112,7 +105,6 @@ def send_weather_email():
         f"Location: Oostzaan\n\n"
         f"Temperature: {temp}°C ({temp_state})\n"
         f"Feels like: {feels}°C\n"
-        f"Trend: {trend}\n\n"
         f"Condition: {condition}\n"
         f"Wind: {wind} km/h ({wind_state})\n\n"
         f"Advice: {advice}"
@@ -134,3 +126,4 @@ def send_weather_email():
 
 
 send_weather_email()
+

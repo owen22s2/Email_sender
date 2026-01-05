@@ -56,35 +56,25 @@ def feels_like(temp, wind):
     return round(temp - (wind * 0.1), 1)
 
 
-def get_temp_trend(current):
-    if not os.path.exists(STATE_FILE):
-        with open(STATE_FILE, "w") as f:
-            f.write(str(current))
-        return "no data"
-
-    with open(STATE_FILE, "r") as f:
-        last = float(f.read())
-
-    with open(STATE_FILE, "w") as f:
-        f.write(str(current))
-
-    if current > last:
-        return "getting warmer"
-    if current < last:
-        return "getting colder"
-    return "stable"
-
-
 def weather_advice(temp, condition, wind):
     if condition == "rain":
         return "Bring a jacket or umbrella"
+    if condition == "snow":
+        return "Wear gloves and a hat"
     if temp <= FREEZING_TEMP:
         return "Dress warm, freezing outside"
     if wind >= WINDY_SPEED:
         return "Very windy, wear something windproof"
+    if temp > 30:
+        return "Hot, dress comfortably"
     if temp >= 22:
         return "Nice weather, light clothing is fine"
-    return "Normal weather, dress comfortably"
+    if temp >= 12:
+        return "Kinda cold, wear a sweater"
+    
+    # fallback for temps below 12 but above freezing
+    return "Cool weather, consider a light jacket"
+
 
 
 def send_weather_email():
@@ -93,7 +83,6 @@ def send_weather_email():
     temp = w["temp"]
     condition = w["condition"]
     wind = w["wind"]
-
     temp_state = (
         "freezing" if temp <= FREEZING_TEMP
         else "cold" if temp < COLD_TEMP
@@ -103,16 +92,14 @@ def send_weather_email():
     wind_state = "windy" if wind >= WINDY_SPEED else "calm"
 
     feels = feels_like(temp, wind)
-    trend = get_temp_trend(temp)
     advice = weather_advice(temp, condition, wind)
 
-    subject = f"Weather Update | {temp}°C | {condition.upper()}"
+    subject = f"Update | {temp}°C | {condition.upper()}"
 
     body = (
         f"Location: Oostzaan\n\n"
         f"Temperature: {temp}°C ({temp_state})\n"
         f"Feels like: {feels}°C\n"
-        f"Trend: {trend}\n"
         f"Condition: {condition}\n"
         f"Wind: {wind} km/h ({wind_state})\n\n"
         f"Advice: {advice}"
@@ -134,3 +121,4 @@ def send_weather_email():
 
 
 send_weather_email()
+

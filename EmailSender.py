@@ -106,8 +106,8 @@ def send_weather_email():
 
     feels = feels_like(temp, wind)
     advice = weather_advice(temp, condition, wind)
-
-   subject = f"{weather_emoji} {temp}°C | {condition.upper()}"
+    
+subject = f"{weather_emoji} {temp}°C | {condition.upper()} | Oostzaan"
 
     body = (
         f"Location: Oostzaan\n\n"
@@ -136,6 +136,7 @@ def send_weather_email():
 send_weather_email()
 
 #script made with ai
+
 
 
 

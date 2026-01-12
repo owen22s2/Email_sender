@@ -16,8 +16,6 @@ COLD_TEMP = 15
 FREEZING_TEMP = 0
 WINDY_SPEED = 30
 
-STATE_FILE = "last_temp.txt"
-
 if not PASSWORD:
     raise RuntimeError("EMAIL_PASS not set")
 
@@ -76,10 +74,8 @@ def weather_advice(temp, condition, wind):
     if temp >= 12:
         return "🧥 Kinda cold, wear a sweater"
     if temp >= 8:
-        return "Cold, put on some warm clothes"   
-    return "🆒 Cool weather, wear a jacket and some gloves"
-
-
+        return "🧣 Cold, put on some warm clothes"
+    return "🆒 Cool weather, wear a jacket and gloves"
 
 
 def send_weather_email():
@@ -88,12 +84,13 @@ def send_weather_email():
     temp = w["temp"]
     condition = w["condition"]
     wind = w["wind"]
+
     temp_state = (
         "freezing" if temp <= FREEZING_TEMP
         else "cold" if temp < COLD_TEMP
         else "warm"
     )
- # Add emojis to the subject
+
     emoji_map = {
         "clear": "☀️",
         "clouds": "☁️",
@@ -101,13 +98,14 @@ def send_weather_email():
         "snow": "❄️",
         "thunder": "⚡"
     }
-    weather_emoji = emoji_map.get(condition, "🌤️") 
+
+    weather_emoji = emoji_map.get(condition, "🌤️")
     wind_state = "windy" if wind >= WINDY_SPEED else "calm"
 
     feels = feels_like(temp, wind)
     advice = weather_advice(temp, condition, wind)
-    
-subject = f"{weather_emoji} {temp}°C | {condition.upper()} | Oostzaan"
+
+    subject = f"{weather_emoji} {temp}°C | {condition.upper()} | Oostzaan"
 
     body = (
         f"Location: Oostzaan\n\n"
@@ -135,11 +133,4 @@ subject = f"{weather_emoji} {temp}°C | {condition.upper()} | Oostzaan"
 
 send_weather_email()
 
-#script made with ai
-
-
-
-
-
-
-
+# script made with AI

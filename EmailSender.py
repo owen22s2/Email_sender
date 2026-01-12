@@ -31,6 +31,8 @@ def map_weather(code):
         return "rain"
     if code in [71, 73, 75]:
         return "snow"
+    if code in [95, 96, 99]:
+        return "thunder"
     return "clouds"
 
 
@@ -57,23 +59,26 @@ def feels_like(temp, wind):
 
 
 def weather_advice(temp, condition, wind):
+    if condition == "thunder":
+        return "⚡ Stay indoors, thunderstorm warning!"
     if condition == "rain":
-        return "Bring a jacket or umbrella"
+        return "🌧️ Bring a jacket or umbrella"
     if condition == "snow":
-        return "Wear gloves and a hat"
+        return "❄️ Wear gloves and a hat"
     if temp <= FREEZING_TEMP:
-        return "Dress warm, freezing outside"
+        return "🥶 Dress warm, freezing outside"
     if wind >= WINDY_SPEED:
-        return "Very windy, wear something windproof"
+        return "💨 Very windy, wear something windproof"
     if temp > 30:
-        return "Hot, dress comfortably"
+        return "🥵 Hot, dress comfortably"
     if temp >= 22:
-        return "Nice weather, light clothing is fine"
+        return "😎 Nice weather, light clothing is fine"
     if temp >= 12:
-        return "Kinda cold, wear a sweater"
-    
-    # fallback for temps below 12 but above freezing
-    return "Cool weather, consider a light jacket"
+        return "🧥 Kinda cold, wear a sweater"
+    if temp >= 8:
+        return "Cold, put on some warm clothes"   
+    return "🆒 Cool weather, wear a jacket and some gloves"
+
 
 
 
@@ -121,4 +126,5 @@ def send_weather_email():
 
 
 send_weather_email()
+
 

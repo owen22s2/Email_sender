@@ -93,13 +93,21 @@ def send_weather_email():
         else "cold" if temp < COLD_TEMP
         else "warm"
     )
-
+ # Add emojis to the subject
+    emoji_map = {
+        "clear": "☀️",
+        "clouds": "☁️",
+        "rain": "🌧️",
+        "snow": "❄️",
+        "thunder": "⚡"
+    }
+    weather_emoji = emoji_map.get(condition, "🌤️") 
     wind_state = "windy" if wind >= WINDY_SPEED else "calm"
 
     feels = feels_like(temp, wind)
     advice = weather_advice(temp, condition, wind)
 
-    subject = f"Update | {temp}°C | {condition.upper()}"
+    subject = f" {weather_emoji}Update | {temp}°C | {condition.upper()}"
 
     body = (
         f"Location: Oostzaan\n\n"
@@ -127,4 +135,5 @@ def send_weather_email():
 
 send_weather_email()
 
+#script made with ai
 

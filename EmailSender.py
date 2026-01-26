@@ -133,4 +133,5 @@ def send_weather_email():
 
 send_weather_email()
 
-# script made with AI
+# script made with the help of AI
+
